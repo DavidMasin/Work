@@ -9,7 +9,7 @@ import protocol
 
 def main():
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    my_socket.connect(("127.0.0.1", protocol.PORT))
+    my_socket.connect(("192.168.1.249", protocol.PORT))
 
     while True:
         user_input = input("Enter command\n")
