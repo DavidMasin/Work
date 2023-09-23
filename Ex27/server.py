@@ -115,7 +115,12 @@ def main():
             if valid_cmd:
                 response = handle_client_request(command, params)
                 if command == 'SEND_FILE':
-                    pass
+                    with open(PHOTO_PATH, 'rb') as f:
+                        while True:
+                            data = f.read(1024)
+                            if not data:
+                                break
+                            server_socket.sendall(data)
                 massage = protocol.create_msg(response)
                 print(massage)
                 client_socket.send(protocol.create_msg(response))
