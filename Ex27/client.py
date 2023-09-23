@@ -31,7 +31,7 @@ def handle_server_response(my_socket, cmd):
         bytes_received = 0
         with open(SAVED_PHOTO_LOCATION, 'wb') as f:
             while bytes_received < length:
-                data = my_socket.recv(1024)
+                data = my_socket.recv(min(1024, length - bytes_received))
                 if not data:
                     break
                 f.write(data)

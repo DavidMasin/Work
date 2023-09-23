@@ -114,16 +114,23 @@ def main():
             print(valid_cmd)
             if valid_cmd:
                 response = handle_client_request(command, params)
-                if command == 'SEND_FILE':
+                if command == "SEND_PHOTO":
+                    # First, send the size of the photo
+                    response = str(os.path.getsize(PHOTO_PATH))
+                    client_socket.send(protocol.create_msg(response))
+
+                    # Then, send the photo itself
                     with open(PHOTO_PATH, 'rb') as f:
                         while True:
                             data = f.read(1024)
                             if not data:
                                 break
                             client_socket.sendall(data)
-                massage = protocol.create_msg(response)
-                print(massage)
-                client_socket.send(protocol.create_msg(response))
+                    print("Photo sent")
+                else:
+                    massage = protocol.create_msg(response)
+                    print(massage)
+                    client_socket.send(protocol.create_msg(response))
 
                 # (6)
 
