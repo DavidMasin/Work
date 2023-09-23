@@ -7,8 +7,8 @@ import socket
 
 import protocol
 
-# IP = "192.168.1.249"
-IP = "127.0.0.1"
+IP = "192.168.1.249"
+# IP = "127.0.0.1"
 SAVED_PHOTO_LOCATION = "C:\\Users\\user\\Downloads\\screen.jpg"  # The path + filename where the copy of the screenshot at the client should be saved
 
 
@@ -25,14 +25,18 @@ def handle_server_response(my_socket, cmd):
     # (8) treat all responses except SEND_PHOTO
 
     # (10) treat SEND_PHOTO
-    else:
+    else:  # for SEND_PHOTO
+        # First, receive the size of the photo
+        length = int(my_socket.recv(protocol.LENGTH_FIELD_SIZE).decode())
+        bytes_received = 0
         with open(SAVED_PHOTO_LOCATION, 'wb') as f:
-            while True:
+            while bytes_received < length:
                 data = my_socket.recv(1024)
                 if not data:
                     break
                 f.write(data)
-                print(data)
+                bytes_received += len(data)
+        print("Photo received and saved.")
 
 
 def main():

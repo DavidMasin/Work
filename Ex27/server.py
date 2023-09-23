@@ -120,7 +120,7 @@ def main():
                             data = f.read(1024)
                             if not data:
                                 break
-                            server_socket.sendall(data)
+                            client_socket.sendall(data)
                 massage = protocol.create_msg(response)
                 print(massage)
                 client_socket.send(protocol.create_msg(response))
