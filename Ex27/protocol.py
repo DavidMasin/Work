@@ -20,7 +20,7 @@ def create_msg(data):
     """
     Create a valid protocol message, with length field
     """
-    sending_string = str(len(data)).zfill(LENGTH_FIELD_SIZE) + str(data)
+    sending_string = str(len(str(data))).zfill(LENGTH_FIELD_SIZE) + str(data)
 
     # (4)
     return sending_string.encode()

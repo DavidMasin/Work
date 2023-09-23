@@ -114,6 +114,8 @@ def main():
             print(valid_cmd)
             if valid_cmd:
                 response = handle_client_request(command, params)
+                if command == 'SEND_FILE':
+                    pass
                 massage = protocol.create_msg(response)
                 print(massage)
                 client_socket.send(protocol.create_msg(response))
@@ -126,8 +128,7 @@ def main():
 
                 # send to client
 
-                if command == 'SEND_FILE':
-                    pass
+
                 # Send the data itself to the client
 
                 # (9)
