@@ -10,7 +10,7 @@ def check_cmd(data):
     Check if the command is defined in the protocol, including all parameters
     For example, DELETE c:\work\file.txt is good, but DELETE alone is not
     """
-    if ("DELETE" in data and len(data) > 8) or ("TAKE_SCREENSHOT" == data) or ("DIR" in data) or ("COPY" in data and len(data) > 5) or ("EXECUTE" in data and len(data) > 8) or ("EXIT" == data) or ("SEND_PHOTO" == data):
+    if ("DELETE" in data and len(data) > 8) or ("TAKE_SCREENSHOT" == data) or ("DIR" in data) or ("COPY" in data and len(data) > 5) or ("EXECUTE" in data and len(data) > 8) or ("EXIT" == data) or ("SEND_PHOTO" == data) or ("hello"==data):
         # (3)
         return True
     return False

@@ -89,6 +89,8 @@ def handle_client_request(command, params):
         response = "Screenshot taken"
     elif command == "SEND_PHOTO":
         response = os.path.getsize(PHOTO_PATH)
+    elif command == "hello":
+        response = "Hello World!"
     return response
 
 
