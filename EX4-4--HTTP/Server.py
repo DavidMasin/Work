@@ -10,7 +10,7 @@ import socket
 # TO DO: set constants
 IP = '127.0.0.1'
 PORT = 80
-SOCKET_TIMEOUT = 6
+# SOCKET_TIMEOUT = 6
 
 
 def get_file_data(filename):
@@ -54,23 +54,25 @@ def handle_client_request(resource, client_socket):
     # TO DO: handle all other headers
 
     # TO DO: read the data from the file
-    file_path = "C:\\Networks\\work\\EX4-4--HTTP\\webroot\\"
-
+    file_path = "C:\\Networks\\work\\EX4-HTTP\\webroot"
     filename = url.replace('/80', '',1)
     print("filename: " + filename)
-    if filename == './80/':
-        filename = 'index.html'
-    print(file_path + filename)
-    if (os.path.isfile(file_path + filename)):
-        data = get_file_data(file_path + filename)  # add file_path before filename
-        # print(data)
+    if(filename == '/calculate-next'):
+        client_socket.send("5".encode())
     else:
-        http_header = "HTTP/1.1 404 Not Found\r\n\r\n"
-        data = b"<html><body><h1>404 Not Found</h1></body></html>"
+        if filename == './80/':
+            filename = 'index.html'
+        print(file_path + filename)
+        if (os.path.isfile(file_path + filename)):
+            data = get_file_data(file_path + filename)  # add file_path before filename
+            # print(data)
+        else:
+            http_header = "HTTP/1.1 404 Not Found\r\n\r\n"
+            data = b"<html><body><h1>404 Not Found</h1></body></html>"
 
-    http_response = http_header.encode() + data  # encode http_header before concatenating with data
-    print(http_header)
-    client_socket.send(http_response)
+        http_response = http_header.encode() + data  # encode http_header before concatenating with data
+        print(http_header)
+        client_socket.send(http_response)
 
 
 def validate_http_request(request):
@@ -115,7 +117,7 @@ def main():
     while True:
         client_socket, _ = server_socket.accept()
         print('New connection received')
-        client_socket.settimeout(SOCKET_TIMEOUT)
+        # client_socket.settimeout(SOCKET_TIMEOUT)
         handle_client(client_socket)
 
 
