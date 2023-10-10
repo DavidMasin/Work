@@ -13,6 +13,12 @@ PORT = 80
 # SOCKET_TIMEOUT = 6
 
 
+def Ex4_9_GetAreaOfTrinagle(heigthWidth):
+    height = int(heigthWidth.split('&')[0].split('=')[1])
+    width = int(heigthWidth.split('&')[1].split('=')[1])
+    return (height * width) / 2
+
+    # return (base * height) / 2
 def get_file_data(filename):
     with open(filename, 'rb') as f:
         data = f.read()
@@ -36,11 +42,9 @@ def handle_client_request(resource, client_socket):
         url = REDIRECTION_DICTIONARY[url]
         client_socket.send("HTTP/1.1 302 Found\r\n".encode())
         # TO DO: send 302 redirection response
-    print(url)
 
     # TO DO: extract requested file tupe from URL (html, jpg etc)
     filetype = url.split('.')[-1]
-    print(filetype)
     if filetype == 'html' or filetype == 'txt':
         http_header = "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n"
     elif filetype == 'jpg':
@@ -54,11 +58,18 @@ def handle_client_request(resource, client_socket):
     # TO DO: handle all other headers
 
     # TO DO: read the data from the file
-    file_path = "C:\\Networks\\work\\EX4-HTTP\\webroot"
+    file_path = "C:\\Networks\\work\\EX4-4--HTTP\\webroot\\"
+    number = url.split('=')[-1]
     filename = url.replace('/80', '',1)
     print("filename: " + filename)
-    if(filename == '/calculate-next'):
-        client_socket.send("5".encode())
+    if(filename.split('?')[0] == '/calculate-next'):
+        print(number)
+        response = str(int(number) + 1)
+        client_socket.send(response.encode())
+    elif (filename.split('?')[0] == '/calculate-area'):
+        variable = filename.split('?')[1]
+        response = str(Ex4_9_GetAreaOfTrinagle(variable))
+        client_socket.send(response.encode())
     else:
         if filename == './80/':
             filename = 'index.html'
