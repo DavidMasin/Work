@@ -1,6 +1,6 @@
 from scapy.all import *
-from scapy.layers.inet import IP, UDP
 from scapy.layers.dns import DNS, DNSQR
+from scapy.layers.inet import IP, UDP
 
 
 def resolve_domain_name(domain_name, dns_server='8.8.8.8'):
